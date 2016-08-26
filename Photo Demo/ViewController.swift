@@ -8,18 +8,43 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
+    @IBOutlet weak var importBtn: UIButton!
+    
+    @IBAction func onImportBtn(_ sender: AnyObject) {
+        
+        
+        
+        let imgPickerController = UIImagePickerController()
+        imgPickerController.delegate = self
+        
+        imgPickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        
+        imgPickerController.allowsEditing = false
+        
+        self.present(imgPickerController, animated: true, completion: nil)
+        
+        
+        
+        
+    }
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            self.imageView.image = image
+        }
+        
+        self.dismiss(animated: true, completion: nil)
+    }
 
 }
 
